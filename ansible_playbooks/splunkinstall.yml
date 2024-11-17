@@ -3,19 +3,19 @@
   hosts: all
   become: yes
   tasks:
-    - name: Install Splunk package
+    - name: Install datadog package
       apt:
-        name: splunk
+        name: datadog-agent
         state: present
 
     - name: Start Splunk service
       service:
-        name: splunk
+        name: datadog-agent
         state: started
         enabled: yes
 
     - name: Check Splunk status
-      shell: "splunk status"
+      shell: "datadog-agent status"
       register: splunk_status
       failed_when: splunk_status.rc != 0
 
