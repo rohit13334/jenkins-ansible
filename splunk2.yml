@@ -1,0 +1,12 @@
+---
+ - name: This playbook is executed via jenkins
+   hosts: "{{ target_host }}"
+   become: yes
+   tasks: 
+     - name: create a directory
+       file: 
+         path: /home/ansible/jenkins
+         state: directory
+         owner: ansible
+         group: ansible
+         mode: 0777
