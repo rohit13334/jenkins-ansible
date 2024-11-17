@@ -1,0 +1,24 @@
+---
+- name: Install and configure Splunk
+  hosts: "{{ target_host }}"
+  become: yes
+  tasks:
+    - name: Install Splunk package
+      apt:
+        name: splunk
+        state: present
+
+    - name: Start Splunk service
+      service:
+        name: splunk
+        state: started
+        enabled: yes
+
+    - name: Check Splunk status
+      shell: "splunk status"
+      register: splunk_status
+      failed_when: splunk_status.rc != 0
+
+    - name: Display Splunk status
+      debug:
+        var: splunk_status.stdout
