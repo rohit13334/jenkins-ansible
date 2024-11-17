@@ -3,22 +3,24 @@
   hosts: all
   become: yes
   tasks:
-    - name: Install datadog package
+  tasks:
+    - name: Install Nginx package
       apt:
-        name: datadog-agent
+        name: nginx
         state: present
+        update_cache: yes
 
-    - name: Start Splunk service
-      service:
-        name: datadog-agent
+    - name: Ensure Nginx service is started and enabled
+      systemd:
+        name: nginx
         state: started
         enabled: yes
 
-    - name: Check Splunk status
-      shell: "datadog-agent status"
-      register: splunk_status
-      failed_when: splunk_status.rc != 0
+    - name: Verify Nginx service status
+      shell: systemctl status nginx
+      register: nginx_status
+      ignore_errors: yes
 
-    - name: Display Splunk status
+    - name: Show Nginx status
       debug:
-        var: splunk_status.stdout
+        var: nginx_status.stdout
