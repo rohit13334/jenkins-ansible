@@ -1,6 +1,6 @@
 ---
  - name: This playbook is to deploy the splunk enterprise on index cluser
-   hosts: "{{ TARGET_HOST }}"
+   hosts: "{{ TARGET_HOSTNAME }}"
    become: yes
    become_method: sudo
    become_user: root
