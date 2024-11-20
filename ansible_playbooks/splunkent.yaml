@@ -7,7 +7,7 @@
   vars: 
     splunk_install_dir: /opt/splunk_ansible
     splunk_home: /opt/splunk_ansible/splunk
-  task: 
+  tasks: 
     - name: validate parameters
       fail:
         msg: "error : missing servers "
