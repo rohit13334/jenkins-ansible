@@ -28,7 +28,6 @@
         path: "{{ splunk_install_dir }}"
         state: directory
         mode: '0755'
-        register: result
     - name:  copy the splunk tarball
       copy: 
         src: /home/ansible/splunk-9.3.1-0b8d769cb912-Linux-x86_64.tgz
@@ -36,7 +35,6 @@
         owner: splunk
         group: splunk
         mode: '0755'
-        register: result
     - name: Extract the Splunk tarball
       unarchive:
         src: "/tmp/splunk-9.3.1-0b8d769cb912-Linux-x86_64.tgz"
