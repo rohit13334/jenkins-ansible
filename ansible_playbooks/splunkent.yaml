@@ -11,7 +11,7 @@
     - name: validate parameters
       fail:
         msg: "error : missing servers "
-        when: TARGET_HOSTNAME is not defined
+      when: TARGET_HOSTNAME is not defined
     - name: create splunk group 
       group: 
         name: splunk
