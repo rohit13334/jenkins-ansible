@@ -12,4 +12,4 @@ ANSIBLE_USER="ansible"
 echo "target hosts are ${TARGET_HOSTNAME} "
 # Run the ansible-playbook command with the target_host variable
 # ansible-playbook ${PLAYBOOK_PATH} --extra-vars "target_host=${TARGET_HOST}" --verbose
-sudo -u $ANSIBLE_USER ansible-playbook ${PLAYBOOK_PATH} -e "TARGET_HOSTNAME=${TARGET_HOSTNAM}" --verbose
+sudo -u $ANSIBLE_USER ansible-playbook -i "${TARGET_HOSTNAM}," -e "TARGET_HOSTNAME=${TARGET_HOSTNAM}" ${PLAYBOOK_PATH}  --verbose
