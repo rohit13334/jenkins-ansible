@@ -1,0 +1,65 @@
+---
+- name: This playbook is to deploy the splunk enterprise on index cluser
+  hosts: "{{ SERVERS  }}"
+  become: yes
+  become_method: sudo
+  become_user: root
+  var: 
+    splunk_install_dir: /opt/splunk_ansible
+    splunk_home: /opt/splunk_ansible/splunk
+  task: 
+    - name: validate parameters
+      fail:
+        msg: "error : missing servers "
+        when: SERVERS is not defined
+    - name: create splunk group 
+      group: 
+        name: splunk
+        state: present
+    - name: crate the user for splunk 
+      user:
+        name: splunk
+        group: splunk
+        home: /home/splunk
+        shell: /bin/bash
+        state: present
+    - name: Ensure the target installation directory exists
+      file:
+        path: "{{ splunk_install_dir }}"
+        state: directory
+        mode: '0755'
+        register: result
+    - name:  copy the splunk tarball
+      copy: 
+        src: /home/ansible/splunk-9.3.1-0b8d769cb912-Linux-x86_64.tgz
+        dest: /tmp
+        owner: splunk
+        group: splunk
+        mode: '0755'
+        register: result
+    - name: Extract the Splunk tarball
+      unarchive:
+        src: "/tmp/splunk-9.3.1-0b8d769cb912-Linux-x86_64.tgz"
+        dest: "{{ splunk_install_dir }}"
+        remote_src: yes
+    - name: change the ownership and permission
+      file: 
+        path: "{{ splunk_home }}"
+        owner: splunk
+        group: splunk
+        mode: '0755'
+        recurse: yes
+    - name: execute the splunk instance
+      shell: |
+         cd {{splunk_home}}/bin
+         ./splunk start --accept-license --no-prompt
+         ./splunk status
+      register: result
+    - name: Clean up the temporary tarball
+      file:
+        path: "/tmp/splunk-9.3.1-0b8d769cb912-Linux-x86_64.tgz"
+        state: absent
+      ignore_errors: yes
+    - name: display the result
+      debug: 
+         var: result
