@@ -1,13 +1,13 @@
 ---
-- name: This playbook is to deploy the splunk enterprise on index cluser
-  hosts: "{{ TARGET_HOST }}"
-  become: yes
-  become_method: sudo
-  become_user: root
-  vars: 
+ - name: This playbook is to deploy the splunk enterprise on index cluser
+   hosts: "{{ TARGET_HOST }}"
+   become: yes
+   become_method: sudo
+   become_user: root
+   vars: 
     splunk_install_dir: /opt/splunk_ansible
     splunk_home: /opt/splunk_ansible/splunk
-  tasks: 
+   tasks: 
     - name: validate parameters
       fail:
         msg: "error : missing servers "
