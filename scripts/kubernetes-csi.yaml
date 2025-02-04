@@ -203,7 +203,7 @@ metadata:
     app.kubernetes.io/version: "1.4.0"
     app.kubernetes.io/component: activegate
 ---
-# Source: dynatrace-operator/templates/Common/logmonitoring/serviceaccount-logmonitoring.yaml
+# Source dynatrace-operator/templates/Common/logmonitoring/serviceaccount-logmonitoring.yaml
 # Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
