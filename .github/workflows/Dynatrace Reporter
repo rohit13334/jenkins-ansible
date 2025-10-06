@@ -2,7 +2,7 @@ name: Dynatrace Reporter
 
 on:
   workflow_run:
-    workflows: ["CI", "demo"]
+    workflows: ["azure-webapps-node.yml"]
     types:
       - completed
 
