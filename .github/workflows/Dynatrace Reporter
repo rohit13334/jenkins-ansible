@@ -2,7 +2,7 @@ name: Dynatrace Reporter
 
 on:
   workflow_run:
-    workflows: ["demo"]
+    workflows: ["CI", "demo"]
     types:
       - completed
 
