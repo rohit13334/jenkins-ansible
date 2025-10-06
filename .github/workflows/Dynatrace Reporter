@@ -1,0 +1,24 @@
+name: Dynatrace Reporter
+
+on:
+  workflow_run:
+    workflows: ["demo"]
+    types:
+      - completed
+
+jobs:
+  send-to-dynatrace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send build result to Dynatrace
+        uses: dynatrace-oss/dynatrace-github-action@v9
+        with:
+          url: ${{ secrets.DT_URL }}
+          token: ${{ secrets.DT_TOKEN }}
+          events: |
+            - title: Build Workflow Result
+              type: CUSTOM_INFO
+              entitySelector: type(service),entityName(github-ci)
+              properties:
+                github.workflow: "${{ github.workflow }}"
+                github.status: "${{ github.event.workflow_run.conclusion }}"
