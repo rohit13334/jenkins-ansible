@@ -54,16 +54,7 @@ jobs:
       with:
         name: node-app
         path: .
-    - name: Debug Dynatrace Inputs
-      if: always()
-      run: |
-        echo "Debugging Dynatrace Inputs:"
-        echo "Dynatrace URL: ${{ secrets.DT_URL }}"
-        echo "Dynatrace Token set? ${{ secrets.DT_TOKEN != '' }}"
-        echo "Repository: ${{ github.repository }}"
-        echo "Branch: ${{ github.ref }}"
-        echo "Actor: ${{ github.actor }}"
-        echo "Event: ${{ github.event_name }}"   
+
         
     - name: Send Dynatrace Metrics for Build
       if: always()  # ensure this runs even if previous steps fail
@@ -83,10 +74,20 @@ jobs:
           - title: "Build Job Completed"
             type: CUSTOM_INFO
             properties:
-              repo: "${{ github.repository }}"
-              branch: "${{ github.ref }}"
-              result: "${{ job.status }}"
-              source: "GitHub Actions"
+              event.source: "GitHub Actions"
+              event.actor: "${{ github.actor }}"
+              event.repo: "${{ github.repository }}"
+              event.branch: "${{ github.ref }}"
+              event.sha: "${{ github.sha }}"
+              event.workflow: "${{ github.workflow }}"
+              event.job: "${{ github.job }}"
+              event.run_id: "${{ github.run_id }}"
+              event.run_number: "${{ github.run_number }}"
+              event.status: "${{ job.status }}"
+              event.html_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              event.head_ref: "${{ github.head_ref }}"
+              event.base_ref: "${{ github.base_ref }}"
+              event.event_name: "${{ github.event_name }}"
 
   deploy:
     if: always()
@@ -133,7 +134,17 @@ jobs:
             type: CUSTOM_DEPLOYMENT
             entitySelector: type(custom_device),tag("github-deploy")
             properties:
-              repo: "${{ github.repository }}"
-              result: "${{ job.status }}"
-              appName: "${{ env.AZURE_WEBAPP_NAME }}"
-              source: "GitHub Actions"
+              event.source: "GitHub Actions"
+              event.actor: "${{ github.actor }}"
+              event.repo: "${{ github.repository }}"
+              event.branch: "${{ github.ref }}"
+              event.sha: "${{ github.sha }}"
+              event.workflow: "${{ github.workflow }}"
+              event.job: "${{ github.job }}"
+              event.run_id: "${{ github.run_id }}"
+              event.run_number: "${{ github.run_number }}"
+              event.status: "${{ job.status }}"
+              event.html_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              event.head_ref: "${{ github.head_ref }}"
+              event.base_ref: "${{ github.base_ref }}"
+              event.event_name: "${{ github.event_name }}"
