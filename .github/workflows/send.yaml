@@ -1,5 +1,4 @@
 name: Send Telemetry after Other Workflow
-
 on:
   workflow_run:
     # Specify the workflows you want to collect telemetry.
