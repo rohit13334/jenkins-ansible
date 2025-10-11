@@ -8,12 +8,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: plengauer/Thoth/actions/instrument/job@v5.16.4
-        with:
-          token: ${{ secrets.DT_TOKEN }}
-        env:
-          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}
-          OTEL_EXPORTER_OTLP_HEADERS: ${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Deploy with OpenTelemetry Instrumentation
