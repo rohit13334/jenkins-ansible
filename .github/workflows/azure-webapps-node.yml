@@ -55,6 +55,7 @@ jobs:
         name: node-app
         path: .
     - name: Debug Dynatrace Inputs
+      if: always()
       run: |
         echo "Debugging Dynatrace Inputs:"
         echo "Dynatrace URL: ${{ secrets.DT_URL }}"
