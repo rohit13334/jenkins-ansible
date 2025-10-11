@@ -54,7 +54,16 @@ jobs:
       with:
         name: node-app
         path: .
-
+    - name: Debug Dynatrace Inputs
+      run: |
+        echo "Debugging Dynatrace Inputs:"
+        echo "Dynatrace URL: ${{ secrets.DT_URL }}"
+        echo "Dynatrace Token set? ${{ secrets.DT_TOKEN != '' }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "Branch: ${{ github.ref }}"
+        echo "Actor: ${{ github.actor }}"
+        echo "Event: ${{ github.event_name }}"   
+        
     - name: Send Dynatrace Metrics for Build
       if: always()  # ensure this runs even if previous steps fail
       uses: dynatrace-oss/dynatrace-github-action@v9
