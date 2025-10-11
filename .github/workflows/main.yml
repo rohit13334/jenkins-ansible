@@ -12,8 +12,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Deploy with OpenTelemetry Instrumentation
         uses: plengauer/Thoth/actions/instrument/deploy@v5.16.4
-        with:
-          github_token: ${{ secrets.DT_TOKEN }}
         env:
           OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}
           OTEL_EXPORTER_OTLP_HEADERS: ${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}
