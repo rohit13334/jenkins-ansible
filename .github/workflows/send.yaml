@@ -8,7 +8,8 @@ on:
     # This action uses completed workflow for making traces and metrics.
     types:
       - completed
-    branches: main
+    branches: 
+      - main
 permissions:
   # Required for private repositories
   actions: read
