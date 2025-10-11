@@ -82,7 +82,6 @@ jobs:
         events: |
           - title: "Build Job Completed"
             type: CUSTOM_INFO
-            entitySelector: type(custom_device),tag("github-build")
             properties:
               repo: "${{ github.repository }}"
               branch: "${{ github.ref }}"
