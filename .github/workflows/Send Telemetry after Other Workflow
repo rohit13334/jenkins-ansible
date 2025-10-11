@@ -1,0 +1,37 @@
+name: Send Telemetry after Other Workflow
+
+on:
+  workflow_run:
+    # Specify the workflows you want to collect telemetry.
+    workflows:
+      - azure-webapps-node.yml
+      - main.yml
+    # This action uses completed workflow for making traces and metrics.
+    types:
+      - completed
+
+permissions:
+  # Required for private repositories
+  actions: read
+
+jobs:
+  send-telemetry:
+    name: Send CI Telemetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run
+        id: run
+        uses: paper2/github-actions-opentelemetry@main
+        env:
+          OTEL_SERVICE_NAME: github-actions-opentelemetry
+          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}
+          # Additional OTLP headers. Useful for OTLP authentication.
+          # e.g.
+          # New Relic: api-key=YOUR_NEWRELIC_API_KEY
+          # Google Cloud Run: Authorization=Bearer <value of $(gcloud auth print-identity-token)>
+          # Basic Authentication: Authorization=Basic <base64-encoded value of userid:password>
+          OTEL_EXPORTER_OTLP_HEADERS: ${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}
+          OTEL_RESOURCE_ATTRIBUTES: 'environment=ci,team=backend'
+        with:
+          # Required for collecting workflow data
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
