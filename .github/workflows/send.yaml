@@ -3,7 +3,6 @@ on:
   workflow_run:
     # Specify the workflows you want to collect telemetry.
     workflows:
-      - azure-webapps-node.yml
       - main.yml
     # This action uses completed workflow for making traces and metrics.
     types:
